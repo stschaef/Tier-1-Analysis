@@ -1,0 +1,234 @@
+\documentclass[english]{article}
+\hyphenpenalty=10000
+% ------------------- Title -------------------
+\newcommand{\fullname}{Steven Schaefer}
+\newcommand{\email}{stschaef@iu.edu}
+\date{}
+\title{Tier 1 Analysis}
+\author{Put into \LaTeX\ by \\ \fullname \\ \textit{\email}}
+
+
+% ------------------- Packages -------------------
+% Overall formatting, use these pretty much always
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{tgschola}
+\usepackage{titlesec}
+\usepackage[margin=1in]{geometry}
+
+% Tikz stuff. Uncomment when using
+
+% \usepackage{tikz-cd}
+% \usepackage{tikz}
+% \usepackage{pgfplots}
+% \pgfplotsset{compat=1.9}
+% \usepgfplotslibrary{fillbetween}
+
+% Math stuff, I'm not entirely sure what all of these do
+\usepackage{multicol}
+\usepackage{amsmath,amssymb}
+\usepackage{amsthm}
+\usepackage{varioref}
+\usepackage{hyperref}
+\usepackage[capitalise]{cleveref}
+\usepackage{enumitem} % for autoenumeration of parts
+\usepackage{mathtools} % for 'bsmallmatrix' environment
+
+% ------------------- Math Operators -------------------
+% mathbb
+\DeclareMathOperator{\R}{\mathbb{R}}
+\DeclareMathOperator{\Q}{\mathbb{Q}}
+\DeclareMathOperator{\N}{\mathbb{N}}
+\DeclareMathOperator{\Z}{\mathbb{Z}}
+\DeclareMathOperator{\C}{\mathbb{C}}
+\DeclareMathOperator{\F}{\mathbb{F}}
+
+\DeclareMathOperator{\Mat}{\text{Mat}}
+\DeclareMathOperator{\GCD}{\text{GCD}}
+\DeclareMathOperator{\LCM}{\text{LCM}}
+\DeclareMathOperator{\Id}{\text{Id}}
+\DeclareMathOperator{\id}{\text{id}}
+\DeclareMathOperator{\Sym}{\text{Sym}}
+\DeclareMathOperator{\Gal}{\text{Gal}}
+\DeclareMathOperator{\Aut}{\text{Aut}}
+\DeclareMathOperator{\Alt}{\text{Alt}}
+\DeclareMathOperator{\Hom}{\text{Hom}}
+\DeclareMathOperator{\Tr}{\text{Tr}}
+\DeclareMathOperator{\sgn}{\text{sgn}}
+\DeclareMathOperator{\rk}{\text{rk}}
+\DeclareMathOperator{\Cl}{\text{Cl}}
+\DeclareMathOperator{\Log}{\text{Log}}
+
+\renewcommand{\Im}{\text{Im}\ }
+\renewcommand{\Re}{\text{Re}\ }
+
+\newcommand{\inv}[1]{#1^{-1}}
+\newcommand{\tup}[3]{#1_{#2}, \dots, #1_{#3}}
+\newcommand{\into}{\hookrightarrow}
+\newcommand{\onto}{\twoheadrightarrow}
+\newcommand{\Legendre}[2]{\left( \dfrac{#1}{#2} \right)}
+
+% ------------------- Theorems and Evironments -------------------
+% For restarting counter after each section
+% \newtheorem{theorem}{Theorem}[section] % the main one 
+\newtheorem{theorem}{Theorem} % the main one
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\newtheorem{problem}[theorem]{Problem}
+
+% \newcounter{problem}
+% \newenvironment{problem}[2][Problem \theproblem]
+% {\refstepcounter{problem} \hiddenproblem}
+
+
+\newcounter{subproblem}[theorem]
+\renewcommand{\thesubproblem}{(\alph{subproblem})}
+\newenvironment{subproblem}[1]{\refstepcounter{subproblem} \begin{trivlist}\item[\hspace{2em} \hskip \labelsep {\bfseries \thesubproblem} \hskip \labelsep {\bfseries #1}]}{\end{trivlist}} 
+
+
+\crefname{problem}{Problem}{Problems}
+\Crefname{problem}{Problem}{Problems}
+\crefname{subproblem}{Problem \thetheorem}{}
+\Crefname{subproblem}{Problem \thetheorem}{}
+
+\titleformat{\section}
+{\normalfont\Large\bfseries}{\thesection}{1em}{}[{\titlerule[0.8pt]}]
+
+% ------------------- Header -------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{Tier 1 Analysis}
+% \rhead{\textit{stschaef}}
+
+\renewcommand{\labelenumi}{(\roman{enumi})}
+
+
+% ------------------- Document -------------------
+\begin{document}
+\begin{minipage}{\textwidth}
+    \maketitle
+    \begin{abstract}
+        I was passed on an extensive collection of handwritten notes -- totaling nearly 600 pages -- for the Tier 1 Analysis Exam at Indiana University. Here I am translating it into \LaTeX, adding my own solutions, and adding any material that I view neceessary. 
+        
+        I currently do not know who the original author is.
+    \end{abstract}
+\end{minipage}
+
+\pagebreak
+
+\begin{theorem}[Finite Intersection Property \footnote{See \cite{rudin} p.38}]
+    \label{thm:finite_intersection}
+    If $\{K_{\alpha}\}$ is a collection of compact subsets of a metric space $X$ such that every finite subcollection of $\{K_{\alpha}\}$ is nonempty, then $\bigcap K_{\alpha}$ is nonempty. 
+\end{theorem}
+
+Note that this may be any collection of compact sets. No countability is assumed.
+
+\begin{proof}[Proof of \cref{thm:finite_intersection}]
+    TODO
+\end{proof}
+
+\begin{problem}
+    A map $f:\R^m \to \R^n$ is \textit{proper} if it is continuous and $\inv{f}(b)$ is compact for each compact subset $B \subset \R^n$; $f$ is \textit{closed} if it is continuous and $f(A)$ is closed for each closed subset $A \subset \R^m$. 
+    
+    \begin{subproblem}{}
+        \label{prob:proper_is_closed}
+        Prove that any proper map $f: \R^m \to \R^n$ is closed.
+        
+    \end{subproblem}
+    
+    
+    \begin{subproblem}{}
+        \label{prob:one_to_one_closed_is_proper}
+        Prove that every one-to-one closed map $f:\R^m \to \R^n$ is proper. 
+    \end{subproblem}
+
+    Supposedly this question is from August 1997, but I could find no record of this when combing through previous exams. Note that Tier 1 August 2010, \#2 touches on the same topic of proper maps. 
+    
+    \begin{proof}[Proof of \cref{prob:proper_is_closed}]
+        TODO
+    \end{proof}
+    
+    \begin{proof}[Proof of \cref{prob:one_to_one_closed_is_proper}]
+        TODO
+    \end{proof}
+\end{problem}
+
+\begin{problem}
+    \label{prob:function_of_intersections}
+    Let the function $f: \R^n \to \R^n$ satisfy the following two conditions:
+    
+    \begin{enumerate}
+        \item \label{enum:prob:function_of_intersections_1} $f(K)$ is compact whenever $K \subset \R^n$ is compact.
+        \item \label{enum:prob:function_of_intersections_2} If $\{K_n\}$ is a decreasing sequence of compact subset of $\R^n$, then 
+        
+        \[
+            f\left(\bigcap_{n = 1}^{\infty} K_n \right) = \bigcap_{n = 1}^{\infty} f(K_n)
+        \]
+    \end{enumerate}
+
+    Prove that $f$ is continuous.
+\end{problem}
+
+\begin{theorem}[Tier 1 August 2015, \#10] \footnote{See \cite{rudin} p.150 and p.516}
+    \label{thm:unif_convergence}
+
+    Suppose $K$ is compact, and 
+    \begin{enumerate}
+        \item \label{enum:thm:unif_convergence_1} $\{f_n\}$ is a sequence of continuous functions on $K$,
+        \item \label{enum:thm:unif_convergence_2} $\{f_n\}$ converges pointwise to a continuous function $f$ on $K$,
+        \item \label{enum:thm:unif_convergence_3} $f_n(x) \geq f_{n + 1}(x)$ for all $x \in K, n \in \N$.
+    \end{enumerate}
+
+    Then $f_n \to f$ uniformly on $K$.
+\end{theorem}
+
+\begin{proof}[Proof of \cref{thm:unif_convergence}]
+    TODO
+\end{proof}
+
+\begin{problem}
+    \label{prob:ball_at_origin}
+    Let $F: \R^n \to \R^n$ be a differentiable map such that $F(0) = 0$. Assume that 
+
+    \[
+      \sum_{j, k = 1}^n \left| {\partial F_j \over \partial x_k} (0) \right|^2 = c < 1.
+    \]
+
+    Prove that there is a ball $B \subset \R^n$ with center 0 such that $F(B) \subset B$.
+\end{problem}
+
+\begin{proof}[Proof of \cref{prob:ball_at_origin}]
+    TODO
+\end{proof}
+
+\begin{problem}
+    \label{prob:small_ball}
+    Suppose that $E \subset \R^n$ is open an that $f: E \to \R^n$ is $C^2$. Suppose also that $f''(x_0)$ is positive definite for some $x_0 \in E$. Prove that there is $r > 0$ such that $f''(x)$ is positive definite for $x \in N_r(x_0)$.
+\end{problem}
+
+\begin{proof}[Proof of \cref{prob:small_ball}]
+    TODO
+\end{proof}
+
+\begin{problem}
+    Let $f: \R^n \to \R$ be $C^2$. A point $x \in \R^n$ is a \textit{critical point} of $f$ if all the partial derivatives of $f$ vanish at $x$. A critical point is \textit{nondegenerate} if the $n \times n$ matrix $\left[ {\partial^2 f \over \partial x_i \partial x_j } (x) \right]$ is non-singular. 
+
+    Let $x$ be a nondegenerate critical point of $f$. Prove that there is an open neighborhood of $x$ which contains no other critical points (i.e. the nondegenerate critical points are isolated).
+\end{problem}
+
+
+
+
+\pagebreak
+
+% ------------------- Bibliography -------------------
+\begin{thebibliography}{9}
+    \bibitem{rudin}
+    Rudin, Walter. \textit{Principles of Mathematical Analysis.} 3d ed, McGraw-Hill, 1976.
+\end{thebibliography}
+
+\end{document}
