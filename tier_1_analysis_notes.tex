@@ -15,6 +15,7 @@
 \usepackage{tgschola}
 \usepackage{titlesec}
 \usepackage[margin=1in]{geometry}
+\usepackage{pdfpages}
 
 % Tikz stuff. Uncomment when using
 
@@ -120,24 +121,37 @@
 
 \pagebreak
 
+\tableofcontents
+
+\pagebreak
+
+\section{Problems}
+
 \begin{theorem}[Finite Intersection Property \footnote{See \cite{rudin} p.38}]
     \label{thm:finite_intersection}
-    If $\{K_{\alpha}\}$ is a collection of compact subsets of a metric space $X$ such that every finite subcollection of $\{K_{\alpha}\}$ is nonempty, then $\bigcap K_{\alpha}$ is nonempty. 
+    If $\{K_{\alpha}\}$ is a collection of compact subsets of a metric space $X$ such that the intersection of every finite subcollection of $\{K_{\alpha}\}$ is nonempty, then $\bigcap K_{\alpha}$ is nonempty. 
 \end{theorem}
 
 Note that this may be any collection of compact sets. No countability is assumed.
 
 \begin{proof}[Proof of \cref{thm:finite_intersection}]
-    TODO
+    Suppose that $\bigcap K_{\alpha}$ is empty. Fix an arbitary set $K \in \{K_{\alpha}\}$. Because $\bigcap K_{\alpha}$ is empty, for all $x \in K$ we have that $x \in K_{\alpha}^c$ for some $\alpha$. Thus, $\bigcup \left( K_{\alpha}^c \right)$ is an oper cover of $K$. 
+
+    Because $K$ is compact there is a finite subcover, $K_{\alpha_1}^c, \dots, K_{\alpha_n}^c$. That is, $K \subset \bigcup_{i = 1}^n \left( K_{\alpha_i}^c \right)$, so 
+    
+    \[
+        K \cap \left( \bigcap_{i = 1}^n K_{\alpha} \right) = \emptyset
+    \]
+
+    This contradicts the hypothesis that the intersection of every finite subcollection of $\{K_{\alpha}\}$ is nonempty. So we conclude that $\bigcap K_{\alpha}$ is nonempty.
 \end{proof}
 
 \begin{problem}
-    A map $f:\R^m \to \R^n$ is \textit{proper} if it is continuous and $\inv{f}(b)$ is compact for each compact subset $B \subset \R^n$; $f$ is \textit{closed} if it is continuous and $f(A)$ is closed for each closed subset $A \subset \R^m$. 
+    A map $f:\R^m \to \R^n$ is \textit{proper} if it is continuous and $\inv{f}(B)$ is compact for each compact subset $B \subset \R^n$; $f$ is \textit{closed} if it is continuous and $f(A)$ is closed for each closed subset $A \subset \R^m$. 
     
     \begin{subproblem}{}
         \label{prob:proper_is_closed}
         Prove that any proper map $f: \R^m \to \R^n$ is closed.
-        
     \end{subproblem}
     
     
@@ -149,7 +163,34 @@ Note that this may be any collection of compact sets. No countability is assumed
     Supposedly this question is from August 1997, but I could find no record of this when combing through previous exams. Note that Tier 1 August 2010, \#2 touches on the same topic of proper maps. 
     
     \begin{proof}[Proof of \cref{prob:proper_is_closed}]
-        TODO
+        Let $A \subset \R^m$ be closed. To show that $f(A)$ is closed, it is sufficient to show that $f(A)^c$ is open. 
+
+            Let $q \in f(A)^c$ and consider $\overline{B}_{\epsilon}(q)$ the closed ball of radius $\epsilon$ about $q$. $\overline{B}_{\epsilon}(q)$ is closed and bounded in $\R^n$, so it is compact. Because $f$ is proper, we have that $\inv{f}\left( \overline{B}_{\epsilon}(q) \right)$ is also compact. Define the following sequence of decreasing compact sets,
+            
+            \[
+                U_j = A \cap \inv{f}\left( \overline{B}_{\epsilon_j}(q) \right),
+            \]
+            where $\epsilon_0 = \epsilon$ and $\epsilon_{j + 1} < \epsilon_j$. Note that each $U_j$ is indeed compact, because $\inv{f}\left( \overline{B}_{\epsilon_j}(q) \right)$ is compact for all $j$ and $A$ is closed. 
+
+            \begin{align*}
+                \bigcap U_j
+                & = A \cap \bigcap \inv{f}\left( \overline{B}_{\epsilon_j}(q) \right) \\
+                & = A \cap \inv{f}\left( q \right) \\
+                & = \emptyset
+            \end{align*}
+            
+            The above intersection is empty by construction, as $q \in f(A)^c$.
+            
+            By \cref{thm:finite_intersection} -- the finite intersection property for compact sets -- because the intersection over all $U_j$'s is empty, there must be some finite subcollection of $\{U_j\}$ with empty intersection. Write this finite subcollection as $U_1, \dots, U_n$. Let $N$  be the smallest such $n$ and note because the $U_j$'s are nested, $\bigcap^N_{j=1} U_j = U_N$. 
+
+            \begin{align*}
+                \bigcap^N U_j
+                & = U_N \\
+                & = A \cap \inv{f}\left( \overline{B}_{\epsilon_N}(q) \right) \\
+                & = \emptyset
+            \end{align*}
+
+            Thus $f(A) \cap B_{r}(q) = \emptyset$, where $r < \epsilon_N$. So $f(A)^c$ is open and we are done. 
     \end{proof}
     
     \begin{proof}[Proof of \cref{prob:one_to_one_closed_is_proper}]
@@ -221,7 +262,11 @@ Note that this may be any collection of compact sets. No countability is assumed
 \end{problem}
 
 
+\pagebreak
 
+\section{Exams Through August 2020}
+TODO: Uncomment when finished
+% \includepdf[pages=-]{analysis-complete.pdf}
 
 \pagebreak
 

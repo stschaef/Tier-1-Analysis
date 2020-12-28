@@ -4,3 +4,5 @@
 *.aux
 *.fdb_latexmk
 *.fls
+*.Identifier
+*.toc
