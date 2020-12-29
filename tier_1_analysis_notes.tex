@@ -105,7 +105,7 @@
 \lhead{Tier 1 Analysis}
 % \rhead{\textit{stschaef}}
 
-\renewcommand{\labelenumi}{(\roman{enumi})}
+% \renewcommand{\labelenumi}{(\roman{enumi})}
 
 
 % ------------------- Document -------------------
@@ -194,7 +194,29 @@ Note that this may be any collection of compact sets. No countability is assumed
     \end{proof}
     
     \begin{proof}[Proof of \cref{prob:one_to_one_closed_is_proper}]
-        TODO
+        Let $B \subset \R^n$ be compact. Because $\R^n$ is Hausdorff and $B$ is compact, $B$ is also closed. By the continuity of $f$, $\inv{f}(B)$ is also closed. To further show that $\inv{f}(B)$ is closed -- and thus $f$ is proper -- we must now show that $\inv{f}(B)$ is bounded. 
+
+        Let $K_j = \{x \in \R^m : ||x|| \geq j\}$. $K_j$ is closed in $\R^m$ for all $j$. Because $f$ is a closed map, $f(K_j)$ is likewise closed for all $j$. Thus $f(K_j) \cap B$ is compact, and $\{f(K_j) \cap B\}_{n = 1}^{\infty}$ is a decreasing sequence of compact sets. Additionally, 
+
+        \begin{align*}
+            \bigcap \left( f(K_j) \cap B \right)  
+            & = B \cap \bigcap f(K_j) \\
+            & = B \cap f\left( \bigcap K_j \right)
+        \end{align*}
+
+        We achieve the final equality above by using the fact that $f$ is injective, so $\bigcap f(K_j) = f\left( \bigcap K_j \right)$. Further, $\bigcap K_j = \emptyset$, so $B \cap f\left( \bigcap K_j \right) = \emptyset$. Again by \cref{thm:finite_intersection} there must be some finite collection of $\{f(K_j) \cap B\}_{n = 1}^{\infty}$ with empty intersection, and because these sets are nested there must be some index $N$ such that 
+
+        \[
+          f(K_N) \cap B = \emptyset  
+        \]
+
+        Using injectivity once again and looking at the preimages we then see,
+
+        \[
+          K_N \cap \inv{f}(B) = \emptyset  
+        \]
+
+        So for all $x \in \inv{f}(B)$, $||x|| < N$. That is, $\inv{f}(B)$ bounded and thus compact. So $f$ is then proper.
     \end{proof}
 \end{problem}
 
@@ -212,6 +234,22 @@ Note that this may be any collection of compact sets. No countability is assumed
     \end{enumerate}
 
     Prove that $f$ is continuous.
+
+    \begin{proof}[Proof of \cref{prob:function_of_intersections}]
+        Let $y \in \R^n$, $\epsilon > 0$, and $K_n = \overline{B}_{1/n}(y)$. $\{K_n\}$ is a sequence of decreasing compact sets. By \cref{enum:prob:function_of_intersections_1}, $f(K_n)$ is also compact for each $n$. So $\{f(K_n)\}$ is likewise a sequence of decreasing compact sets. 
+
+        Define $A = \R^n \setminus B_{\epsilon}(f(y))$. $A$ is closed and each $f(K_n)$ is compact, so $A \cap f(K_n)$ is also compact. By \cref{enum:prob:function_of_intersections_2}, $\bigcap f(K_n) = f\left(\bigcap K_n \right)$. So,
+
+        \begin{align*}
+            \bigcap \left(A \cap f(K_n)\right)
+            & = A \cap \bigcap f(K_n) \\
+            & = A \cap f\left(\bigcap K_n \right) \\
+            & = A \cap f(y) \\
+            & = \emptyset
+        \end{align*}
+
+        Note that the final equality above holds, as $f(y) \not \in A$ by construction of $A$. Thus by \cref{thm:finite_intersection} there exists an index $N$ such that $A \cap f(K_N) = \emptyset$. Thus, $f(K_N) \subset A^c = B_{\epsilon}(f(y))$. So for $x \in B_{\delta}(y)$ we have $f(x) \in B_{\epsilon}(f(y))$ for $\delta < \frac{1}{N}$. That is, $f$ continuous at $y$, and because $y \in \R^n$ was arbitary $f$ is continuous everywhere. 
+    \end{proof}
 \end{problem}
 
 \begin{theorem}[Tier 1 August 2015, \#10] \footnote{See \cite{rudin} p.150 and p.516}
@@ -228,7 +266,17 @@ Note that this may be any collection of compact sets. No countability is assumed
 \end{theorem}
 
 \begin{proof}[Proof of \cref{thm:unif_convergence}]
-    TODO
+    Define $g_n = f_n - f$. Note we get entirely analagous conditions on $g_n$ as were given for $f$. That is, \cref{enum:thm:unif_convergence_1,enum:thm:unif_convergence_2,enum:thm:unif_convergence_3} give us,
+
+    \begin{enumerate}
+        \item \label{enum:thm:unif_convergence_g_1} $\{g_n\}$ is a sequence of continuous functions on $K$,
+        \item \label{enum:thm:unif_convergence_g_2} $\{g_n\}$ converges pointwise to 0 on $K$,
+        \item \label{enum:thm:unif_convergence_g_3} $g_n(x) \geq g_{n + 1}(x)$ for all $x \in K, n \in \N$.
+    \end{enumerate}
+    
+    To prove the desired statement, it is sufficient to show that $g_n \overset{\text{unif.}}{\to} 0$. Let $\epsilon > 0$ be given and let $E_n = \inv{g_n}([\epsilon, \infty))$. Because $g_n$ is continuous, $E_n$ is closed for all $n$. Further, $E_n$ a closed subset of  $K$ and $K$ is compact, so $E_n$ compact. Note that $E_n$ is a decreasing sequence of compact sets because of \cref{enum:thm:unif_convergence_g_3}.
+
+    Because $g_n \overset{\text{p.w.}}{\to} 0$ on $K$, we have $\bigcap E_n = \emptyset$. So by \cref{thm:finite_intersection}, there is some index $N$ such that $E_N = \inv{g_N}([\epsilon, \infty)) = \emptyset$. So for $x \in K$, we have $0 \leq g_N(x) < \epsilon$. Further, by \cref{enum:thm:unif_convergence_g_3} we have $g_n(x) \in [0, \epsilon)$ for $n \geq N$, $x \in K$. So $g_n \overset{\text{unif.}}{\to} 0$, and thus $f_n \overset{\text{unif.}}{\to} f$.
 \end{proof}
 
 \begin{problem}
