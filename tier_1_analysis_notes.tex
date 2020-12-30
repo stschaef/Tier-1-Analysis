@@ -59,6 +59,8 @@
 \DeclareMathOperator{\rk}{\text{rk}}
 \DeclareMathOperator{\Cl}{\text{Cl}}
 \DeclareMathOperator{\Log}{\text{Log}}
+\DeclareMathOperator{\<}{\langle}
+\renewcommand{\>}{\rangle}
 
 \renewcommand{\Im}{\text{Im}\ }
 \renewcommand{\Re}{\text{Re}\ }
@@ -291,16 +293,80 @@ Note that this may be any collection of compact sets. No countability is assumed
 \end{problem}
 
 \begin{proof}[Proof of \cref{prob:ball_at_origin}]
-    TODO
+    Because $F$ is differentiable on $\R^n$, it is in particular differentiable at 0. So there exists a linear transformation $DF(0)$ \footnote{This notation may be a little verbose, but I am choosing it here to be clear that the derivative of $F$ is a map that assigns to each point $p$ in the domain of $F$ a linear transformation $DF(p)$. Another way to write this is $DF|_p$, however this notation didn't play nice with the absolute value bars in the above TeX.} -- i.e. the Jacobian matrix evaluated at 0 -- such that,
+
+    \begin{align*}
+        0
+        & = \lim_{h \to 0} \frac{|F(h) - F(0) - DF(0)(h)|}{|h|} \\
+        & = \lim_{h \to 0} \frac{|F(h) - DF(0)(h)|}{|h|}
+    \end{align*}
+
+    Define $E(h) = F(h) - DF(0)(h)$ where $\lim_{h \to 0} \frac{|E(h)|}{|h|}$ \footnote{Another notational note: In this particular case, the norm of both the numerator and denominator is $| \cdot |_{\R^n}$. However in generality, the numerator and denominator do not have the same norm on them. The denominator belongs to the domain of $F$ and the numerator belongs to the codomain. Even further, it may be more clear to indicate these norms with $||\cdot||_{\R^n}$, but I am not in the habit of writing this.}. We may think of this as the error term when considering the derivative as an approxiamtion of $F$ in a neighborhood of 0. Thus,
+
+    \[
+      F(h) = DF(0)(h) + E(h)
+    \]
+
+    By the triangle inequality of $|\cdot|_{\R^n}$,
+
+    \begin{align*}
+        |F(h)| 
+        & \leq |DF(0)(h)| + |E(h)| \\
+        & \leq \sup \{\left|DF(0)(x)\right| : |x| = 1\} |h| + |E(h)|
+    \end{align*}
+
+    Using the substitution $A = \sup \{\left|DF(0)(x)\right| : |x| = 1\}$, we then rewrite this as,
+
+    \begin{equation}
+        \label{eqn:prob:ball_at_origin}
+        \frac{|F(h)|}{|h|} \leq A + \frac{|E(h)|}{|h|}
+    \end{equation}
+    
+    Let $x \in \R^n, |x| = 1$ and consider the coordinates of $DF(0)(x)$. 
+
+    \begin{align*}
+        (DF(0)(x))_i 
+        & = \sum_{k = 1}^n {\partial F_i \over \partial x_k} (0) x_k 
+    \end{align*}
+
+    So by the triangle inequality,
+
+    \begin{align*}
+        \left| (DF(0)(x))_i \right|
+        & \leq \sum_{k = 1}^n \left| {\partial F_i \over \partial x_k} (0) x_k \right| \\
+        & \overset{\text{C.S. \footnotemark}}{\leq} \left( \sum \left| {\partial F_i \over \partial x_k} (0) \right|^2 \right) \left( \sum |x_k|^2 \right) \\
+        & = \left( \sum \left| {\partial F_i \over \partial x_k} (0) \right|^2 \right) |x| \\
+        & = \left( \sum \left| {\partial F_i \over \partial x_k} (0) \right|^2 \right)
+    \end{align*}
+    \footnotetext{Cauchy-Schwartz Inequality}
+    
+    We then use this to find the norm of $DF(0)(x)$,
+
+    \begin{align*}
+        |DF(0)(x)| 
+        & = \sum_i \sum_k \left| {\partial F_i \over \partial x_k} (0) \right|^2 \\
+        & = c \\
+        & < 1
+    \end{align*}
+
+    Thus, $A = \sup \{\left|DF(0)(x)\right| : |x| = 1\} \leq \sqrt{c} < 1$. Because $\frac{|E(h)|}{|h|} \to 0$ as $h \to 0$, there exists $\delta > 0$ such that for $|h| < \delta$ we have $\frac{|E(h)|}{|h|} < 1 - \sqrt{c}$. Taking $B$ to be the ball of radius $\delta$ about 0, we modify \cref{eqn:prob:ball_at_origin} appropriately as,
+
+    \begin{align*}
+        \frac{|F(h)|}{|h|}
+        & < \sqrt{c} + 1 - \sqrt{c} \\
+        & = 1
+    \end{align*}
+
+    So $|F(h)| < |h|$ for $|h| < \delta$. That is to say, $F(B) \subset B$.
 \end{proof}
 
 \begin{problem}
     \label{prob:small_ball}
-    Suppose that $E \subset \R^n$ is open an that $f: E \to \R^n$ is $C^2$. Suppose also that $f''(x_0)$ is positive definite for some $x_0 \in E$. Prove that there is $r > 0$ such that $f''(x)$ is positive definite for $x \in N_r(x_0)$.
+    Suppose that $E \subset \R^n$ is open and that $f: E \to \R^n$ is $C^2$. Suppose also that $f''(x_0)$ is positive definite for some $x_0 \in E$. Prove that there is $r > 0$ such that $f''(x)$ is positive definite for $x \in N_r(x_0)$.
 \end{problem}
 
 \begin{proof}[Proof of \cref{prob:small_ball}]
-    TODO
+    Proceed by contradiction. Suppose not, then for all $r > 0$ there exists $x \in B_r(x_0)$ such that $f''(x)$ is not positive definite -- that is, for each $x$ there exists $y \neq 0$ such that $\< y, y \>_{f''(x)} \leq 0$ \footnote{I'm abusing notation a little here. $\< y, y \>_{f''(x)}$ is meant to indicate that the Hessian can act as a bilinear form. We equivalently write this expression as $\< y, y \>_{f''(x)} = \<f''(x)y, y \>_{\R^n}$.}
 \end{proof}
 
 \begin{problem}
