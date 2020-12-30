@@ -366,13 +366,71 @@ Note that this may be any collection of compact sets. No countability is assumed
 \end{problem}
 
 \begin{proof}[Proof of \cref{prob:small_ball}]
-    Proceed by contradiction. Suppose not, then for all $r > 0$ there exists $x \in B_r(x_0)$ such that $f''(x)$ is not positive definite -- that is, for each $x$ there exists $y \neq 0$ such that $\< y, y \>_{f''(x)} \leq 0$ \footnote{I'm abusing notation a little here. $\< y, y \>_{f''(x)}$ is meant to indicate that the Hessian can act as a bilinear form. We equivalently write this expression as $\< y, y \>_{f''(x)} = \<f''(x)y, y \>_{\R^n}$.}
+    Proceed by contradiction. Suppose not, then for all $r > 0$ there exists $x \in B_r(x_0)$ such that $f''(x)$ is not positive definite -- that is, for each $x$ there exists $y \neq 0$ such that $\< y, y \>_{f''(x)} \leq 0$. \footnote{I'm abusing notation a little here. $\< y, y \>_{f''(x)}$ is meant to indicate that the Hessian can act as a bilinear form. We equivalently write this expression as $\< y, y \>_{f''(x)} = \<f''(x)y, y \>_{\R^n}$.}
+
+    Create sequences following the above pattern: for each $r_n = \frac{1}{n}$ we have some $x_n \in B_{r_n}(x_0)$ such that there is some $y_n \neq 0$ where $\< y_n, y_n \>_{f''(x_n)} \leq 0$. For convenience we may normalize $y_n$ to be unit length. This in turn makes $y_n$ a bounded sequence, as all entries in the sequence have length 1, so there is a convergent subsequence $y_{n_k} \to y$ where $|y| = 1$. 
+
+    We wish now to show that $\<y_{n_k},y_{n_k}\>_{f''(x_{n_k})} \to \< y, y\>_{f''(x_0)}$,
+
+    \begin{align*}
+        |\< y, y\>_{f''(x_0)} - \<y_{n_k},y_{n_k}\>_{f''(x_{n_k})}|
+        & \leq |\< y, y\>_{f''(x_0)} - \<y,y_{n_k}\>_{f''(x_0)}| \\
+        & \ \ \ + |\< y, y_{n_k}\>_{f''(x_0)} - \<y,y_{n_k}\>_{f''(x_{n_k})}| \\
+        & \ \ \ + |\< y, y_{n_k}\>_{f''(x_{n_k})} - \<y_{n_k},y_{n_k}\>_{f''(x_{n_k})}| \\
+        & = I_1 + I_2 + I_3, \text{ respectively}
+    \end{align*}
+
+    \begin{align*}
+        I_1
+        & = |\< y, y\>_{f''(x_0)} - \<y,y_{n_k}\>_{f''(x_0)}| \\
+        & = |\< y, y - y_{n_k}\>_{f''(x_0)}| \\
+        & = |\<f''(x_0)y, y - y_{n_k}\>_{\R^n}| \\
+        & \overset{\text{C.S.}}{\leq} |f''(x_0)y||y - y_{n_k}| \\
+        & \leq ||f''(x_0)|| \ |y| \ |y - y_{n_k}| \\
+        & = ||f''(x_0)||\ |y - y_{n_k}|
+    \end{align*}
+
+    where $||f''(x_0)|| = \sup \{\left|f''(x_0)(a)\right| : |a| = 1\}$ is the matrix norm. Further, $||f''(x_0)||$ is fixed and $y_{n_k} \to y$ as $k \to \infty$, so $I_1 \to 0$.
+    
+    \begin{align*}
+        I_2
+        & = |\< y, y_{n_k}\>_{f''(x_0)} - \<y,y_{n_k}\>_{f''(x_{n_k})}| \\
+        & = |\<f''(x_0)y, y_{n_k}\>_{\R^n} - \< f''(x_{n_k})y, y_{n_k} \>_{\R^n}| \\
+        & = |\< (f''(x_0) - f''(x_{n_k})y, y_{n_k} \>_{\R^n}| \\
+        & \leq ||f''(x_0) - f''(x_{n_k}|| \ |y|\ |y_{n_k}| \\
+        & = ||f''(x_0) - f''(x_{n_k}||
+    \end{align*}
+
+    $I_2 \to 0$, as $x_{n_k} \to x_0$ as $k \to \infty$ and $f$ is $C^2$ -- in particular, $f''$ continuous -- so $||f''(x_0) - f''(x_{n_k}||$ may be made arbitarily small. 
+
+    \begin{align*}
+        I_3 
+        & = |\< y, y_{n_k}\>_{f''(x_{n_k})} - \<y_{n_k},y_{n_k}\>_{f''(x_{n_k})}| \\
+        & \leq ||f''(x_{n_k})|| \ |y - y_{n_k}| \\
+        & < M |y - y_{n_k}|
+    \end{align*}
+
+    We achieve these results on $I_3$ via a similar argument to above, and noting that $||f''(x_{n_k})||$ bounded (above by $M$). Because $y_{n_k} \to y$, $I_3$ may be made arbitarily small. Combining this with the above, 
+
+    \begin{align*}
+        |\< y, y\>_{f''(x_0)} - \<y_{n_k},y_{n_k}\>_{f''(x_{n_k})}|
+        & \leq I_1 + I_2 + I_3 \\
+        & = \epsilon
+    \end{align*}
+
+    For arbitarily small $\epsilon$, so $\<y_{n_k},y_{n_k}\>_{f''(x_{n_k})} \to \< y, y\>_{f''(x_0)}$. However, for sake of contradiction we assumed that $\<y_{n_k},y_{n_k}\>_{f''(x_{n_k})} \leq 0$ and it is given that $\< y, y\>_{f''(x_0)} > 0$, as $y \neq 0$. Thus, the desired statement is true by contradiction.
+
 \end{proof}
 
 \begin{problem}
+    \label{prob:nondeg}
     Let $f: \R^n \to \R$ be $C^2$. A point $x \in \R^n$ is a \textit{critical point} of $f$ if all the partial derivatives of $f$ vanish at $x$. A critical point is \textit{nondegenerate} if the $n \times n$ matrix $\left[ {\partial^2 f \over \partial x_i \partial x_j } (x) \right]$ is non-singular. 
 
     Let $x$ be a nondegenerate critical point of $f$. Prove that there is an open neighborhood of $x$ which contains no other critical points (i.e. the nondegenerate critical points are isolated).
+    
+    \begin{proof}[Proof of \cref{prob:nondeg}]
+        TODO
+    \end{proof}
 \end{problem}
 
 
